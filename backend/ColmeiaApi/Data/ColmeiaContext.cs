@@ -1,0 +1,158 @@
+using ColmeiaApi.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace ColmeiaApi.Data;
+
+public class ColmeiaContext(DbContextOptions<ColmeiaContext> options) : DbContext(options)
+{
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<Localizacao> Localizacoes => Set<Localizacao>();
+    public DbSet<Colmeia> Colmeias => Set<Colmeia>();
+    public DbSet<Sensor> Sensores => Set<Sensor>();
+    public DbSet<Registro> Registros => Set<Registro>();
+    public DbSet<Leitura> Leituras => Set<Leitura>();
+    public DbSet<Saude> Saudes => Set<Saude>();
+    public DbSet<SolicitacaoAlteracao> SolicitacoesAlteracao => Set<SolicitacaoAlteracao>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Usuario>(e =>
+        {
+            e.ToTable("Usuario");
+            e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.Nome).HasColumnName("nome").HasMaxLength(100);
+            e.Property(x => x.Sobrenome).HasColumnName("sobrenome").HasMaxLength(100);
+            e.Property(x => x.Cpf).HasColumnName("cpf").HasMaxLength(14);
+            e.HasIndex(x => x.Cpf);
+            e.Property(x => x.Email).HasColumnName("email").HasMaxLength(200);
+            e.HasIndex(x => x.Email).IsUnique();
+            e.Property(x => x.SenhaHash).HasColumnName("senhaHash");
+            e.Property(x => x.DataNascimento).HasColumnName("dataNascimento");
+            e.Property(x => x.Instituicao).HasColumnName("instituicao").HasMaxLength(200);
+            e.Property(x => x.Permissao).HasColumnName("permissao")
+                .HasConversion<string>().HasMaxLength(20);
+            e.Property(x => x.Ativo).HasColumnName("ativo");
+            e.Property(x => x.Aprovado).HasColumnName("aprovado");
+            e.Property(x => x.Emoji).HasColumnName("emoji").HasMaxLength(10);
+            e.Property(x => x.Criacao).HasColumnName("criacao");
+            e.Property(x => x.UltimoLogin).HasColumnName("ultimoLogin");
+        });
+
+        modelBuilder.Entity<Localizacao>(e =>
+        {
+            e.ToTable("Localizacao");
+            e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.Cidade).HasColumnName("cidade").HasMaxLength(100);
+            e.Property(x => x.Latitude).HasColumnName("latitude").HasPrecision(10, 7);
+            e.Property(x => x.Longitude).HasColumnName("longitude").HasPrecision(10, 7);
+            e.Property(x => x.Altitude).HasColumnName("altitude").HasPrecision(8, 2);
+        });
+
+        modelBuilder.Entity<Colmeia>(e =>
+        {
+            e.ToTable("Colmeia");
+            e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.IdLocalizacao).HasColumnName("idLocalizacao");
+            e.Property(x => x.Nome).HasColumnName("nome").HasMaxLength(100);
+            e.HasOne(x => x.Localizacao)
+                .WithMany(x => x.Colmeias)
+                .HasForeignKey(x => x.IdLocalizacao);
+        });
+
+        modelBuilder.Entity<Sensor>(e =>
+        {
+            e.ToTable("Sensor");
+            e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.IdColmeia).HasColumnName("idColmeia");
+            e.Property(x => x.Tipo).HasColumnName("tipo").HasMaxLength(20);
+            e.HasOne(x => x.Colmeia)
+                .WithMany(x => x.Sensores)
+                .HasForeignKey(x => x.IdColmeia);
+        });
+
+        modelBuilder.Entity<Registro>(e =>
+        {
+            e.ToTable("Registro");
+            e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.IdUsuario).HasColumnName("idUsuario");
+            e.Property(x => x.IdColmeia).HasColumnName("idColmeia");
+            e.Property(x => x.DataHora).HasColumnName("dataHoraObservacao");
+            e.Property(x => x.Criacao).HasColumnName("criacao");
+            e.Property(x => x.Atualizacao).HasColumnName("atualizacao");
+            e.Property(x => x.Exclusao).HasColumnName("exclusao");
+            e.HasOne(x => x.Usuario)
+                .WithMany(x => x.Registros)
+                .HasForeignKey(x => x.IdUsuario);
+            e.HasOne(x => x.Colmeia)
+                .WithMany()
+                .HasForeignKey(x => x.IdColmeia);
+        });
+
+        modelBuilder.Entity<Leitura>(e =>
+        {
+            e.ToTable("Leitura");
+            e.HasKey(x => x.IdRegistro);
+            e.Property(x => x.IdRegistro).HasColumnName("idRegistro");
+            e.Property(x => x.IdSensor).HasColumnName("idSensor");
+            e.Property(x => x.TemperaturaInterna).HasColumnName("temperaturaInterna").HasPrecision(5, 2);
+            e.Property(x => x.TemperaturaExterna).HasColumnName("temperaturaExterna").HasPrecision(5, 2);
+            e.Property(x => x.UmidadeInterna).HasColumnName("umidadeInterna").HasPrecision(5, 2);
+            e.Property(x => x.UmidadeExterna).HasColumnName("umidadeExterna").HasPrecision(5, 2);
+            e.Property(x => x.PressaoAtmosferica).HasColumnName("pressaoAtmosferica").HasPrecision(7, 2);
+            e.Property(x => x.VelocidadeVento).HasColumnName("velocidadeVento").HasPrecision(6, 2);
+            e.Property(x => x.Peso).HasColumnName("peso").HasPrecision(7, 3);
+            e.HasOne(x => x.Registro)
+                .WithOne(x => x.Leitura)
+                .HasForeignKey<Leitura>(x => x.IdRegistro);
+            e.HasOne(x => x.Sensor)
+                .WithMany(x => x.Leituras)
+                .HasForeignKey(x => x.IdSensor);
+        });
+
+        modelBuilder.Entity<Saude>(e =>
+        {
+            e.ToTable("Saude");
+            e.HasKey(x => x.IdRegistro);
+            e.Property(x => x.IdRegistro).HasColumnName("idRegistro");
+            e.Property(x => x.IdColmeia).HasColumnName("idColmeia");
+            e.Property(x => x.PresencaRainha).HasColumnName("presencaRainha");
+            e.Property(x => x.PresencaPredador).HasColumnName("presencaPredador");
+            e.Property(x => x.TipoPredador).HasColumnName("tipoPredador").HasMaxLength(20);
+            e.Property(x => x.Comida).HasColumnName("comida").HasMaxLength(20);
+            e.Property(x => x.CondicaoClimatica).HasColumnName("condicaoClimatica").HasMaxLength(20);
+            e.Property(x => x.Saudavel).HasColumnName("saudavel");
+            e.Property(x => x.Observacoes).HasColumnName("observacoes");
+            e.HasOne(x => x.Registro)
+                .WithOne(x => x.Saude)
+                .HasForeignKey<Saude>(x => x.IdRegistro);
+            e.HasOne(x => x.Colmeia)
+                .WithMany(x => x.Saudes)
+                .HasForeignKey(x => x.IdColmeia);
+        });
+
+        modelBuilder.Entity<SolicitacaoAlteracao>(e =>
+        {
+            e.ToTable("SolicitacaoAlteracao");
+            e.Property(x => x.Id).HasColumnName("id");
+            e.Property(x => x.IdRegistro).HasColumnName("idRegistro");
+            e.Property(x => x.IdUsuario).HasColumnName("idUsuario");
+            e.Property(x => x.Tipo).HasColumnName("tipo")
+                .HasConversion<string>().HasMaxLength(10);
+            e.Property(x => x.Status).HasColumnName("status")
+                .HasConversion<string>().HasMaxLength(15);
+            e.Property(x => x.DadosNovos).HasColumnName("dadosNovos").HasColumnType("text");
+            e.Property(x => x.MotivoRejeicao).HasColumnName("motivoRejeicao").HasMaxLength(500);
+            e.Property(x => x.Criacao).HasColumnName("criacao");
+            e.Property(x => x.Resolucao).HasColumnName("resolucao");
+            e.Property(x => x.IdAdminResolveu).HasColumnName("idAdminResolveu");
+            e.HasOne(x => x.Registro)
+                .WithMany()
+                .HasForeignKey(x => x.IdRegistro)
+                .OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.Usuario)
+                .WithMany()
+                .HasForeignKey(x => x.IdUsuario)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+    }
+}

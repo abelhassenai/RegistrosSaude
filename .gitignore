@@ -1,7 +1,19 @@
-# Ignora tudo na raiz, exceto registro-colmeia e este .gitignore
-/*
-!/.gitignore
-!/registro-colmeia/
-
+# .NET
 bin/
 obj/
+.vs/
+
+# Node
+node_modules/
+dist/
+
+# Segredos e ambiente
+.env
+.env.*
+!.env.example
+
+# IDE e sistema
+.idea/
+*.user
+.DS_Store
+Thumbs.db

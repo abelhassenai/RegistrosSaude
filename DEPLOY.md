@@ -32,7 +32,7 @@ As tabelas são criadas sozinhas pelo backend ao iniciar (EF Migrations).
 ## 2. Backend (Render)
 
 1. Em https://render.com, crie um **Web Service** a partir do repositório do GitHub.
-2. Runtime: **Docker**. Root Directory: `registro-colmeia/backend`. Plano: **Free**.
+2. Runtime: **Docker**. Root Directory: `backend`. Plano: **Free**.
 3. Variáveis de ambiente:
 
 | Nome | Valor |
@@ -48,7 +48,7 @@ As tabelas são criadas sozinhas pelo backend ao iniciar (EF Migrations).
 ## 3. Frontend (Vercel)
 
 1. Em https://vercel.com, **Add New Project** e importe o repositório.
-2. **Root Directory:** `registro-colmeia/frontend`. Framework: Next.js (detectado).
+2. **Root Directory:** `frontend`. Framework: Next.js (detectado).
 3. Variável de ambiente: `API_INTERNAL_URL` = URL do Render (sem barra no final).
 4. Deploy. A cada push na branch de produção, o Vercel publica de novo.
 
@@ -62,7 +62,7 @@ crie um monitor HTTP no https://uptimerobot.com para `https://xxxx.onrender.com/
 - Editar o projeto: alterar o código e dar push no GitHub. Vercel e Render publicam sozinhos.
 - Ver erros do backend: painel do Render, aba *Logs*.
 - Ver dados: painel do TiDB Cloud (*SQL Editor*) ou qualquer cliente MySQL.
-- Rodar localmente: `docker compose up --build` dentro de `registro-colmeia` (sobe MariaDB, API, frontend e Nginx em http://localhost).
+- Rodar localmente: `docker compose up --build` na raiz do repositório (sobe MariaDB, API, frontend e Nginx em http://localhost).
 
 ## Passagem de responsabilidade
 

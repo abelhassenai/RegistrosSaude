@@ -20,6 +20,7 @@ namespace ColmeiaApi.Migrations
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            MySqlModelBuilderExtensions.UseGuidCollation(modelBuilder, "ascii_bin");
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("ColmeiaApi.Models.Colmeia", b =>
@@ -380,8 +381,7 @@ namespace ColmeiaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Cpf")
-                        .IsUnique();
+                    b.HasIndex("Cpf");
 
                     b.HasIndex("Email")
                         .IsUnique();

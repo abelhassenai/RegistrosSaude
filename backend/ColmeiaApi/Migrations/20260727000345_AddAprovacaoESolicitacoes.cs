@@ -19,16 +19,16 @@ namespace ColmeiaApi.Migrations
 
             migrationBuilder.Sql(@"
                 CREATE TABLE IF NOT EXISTS `SolicitacaoAlteracao` (
-                    `id`               char(36)         NOT NULL COLLATE ascii_general_ci,
-                    `idRegistro`       char(36)         NOT NULL COLLATE ascii_general_ci,
-                    `idUsuario`        char(36)         NOT NULL COLLATE ascii_general_ci,
+                    `id`               char(36)         NOT NULL COLLATE ascii_bin,
+                    `idRegistro`       char(36)         NOT NULL COLLATE ascii_bin,
+                    `idUsuario`        char(36)         NOT NULL COLLATE ascii_bin,
                     `tipo`             varchar(10)      NOT NULL,
                     `status`           varchar(15)      NOT NULL,
                     `dadosNovos`       text             NULL,
                     `motivoRejeicao`   varchar(500)     NULL,
                     `criacao`          datetime(6)      NOT NULL,
                     `resolucao`        datetime(6)      NULL,
-                    `idAdminResolveu`  char(36)         NULL COLLATE ascii_general_ci,
+                    `idAdminResolveu`  char(36)         NULL COLLATE ascii_bin,
                     CONSTRAINT `PK_SolicitacaoAlteracao` PRIMARY KEY (`id`),
                     CONSTRAINT `FK_SolicitacaoAlteracao_Registro_idRegistro`
                         FOREIGN KEY (`idRegistro`) REFERENCES `Registro` (`id`),

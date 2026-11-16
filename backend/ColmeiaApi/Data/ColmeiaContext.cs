@@ -16,6 +16,10 @@ public class ColmeiaContext(DbContextOptions<ColmeiaContext> options) : DbContex
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // O padrão do Pomelo para colunas Guid (char(36)) é ascii_general_ci, que o TiDB rejeita.
+        // ascii_bin funciona no TiDB e no MariaDB.
+        modelBuilder.UseGuidCollation("ascii_bin");
+
         modelBuilder.Entity<Usuario>(e =>
         {
             e.ToTable("Usuario");

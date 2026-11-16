@@ -29,6 +29,25 @@ Server=<host>;Port=4000;Database=colmeia;User=<usuario>;Password=<senha>;SslMode
 
 As tabelas são criadas sozinhas pelo backend ao iniciar (EF Migrations).
 
+### Compatibilidade com o TiDB
+
+O TiDB não aceita o collation `ascii_general_ci`, que é o padrão do Pomelo para colunas `Guid`. Por isso o `ColmeiaContext` usa `modelBuilder.UseGuidCollation("ascii_bin")`, e as migrations criam as colunas `char(36)` com `ascii_bin`. Esse collation funciona no TiDB e no MariaDB.
+
+Ao criar migrations novas, revise o SQL gerado. Se aparecer `ascii_general_ci` (por exemplo em `migrationBuilder.Sql(...)` escrito à mão), troque por `ascii_bin`.
+
+Para testar as migrations no TiDB antes do deploy, rode um TiDB local:
+
+```
+docker run --rm --name tidb-test -p 4000:4000 pingcap/tidb:v7.5.1
+```
+
+Depois crie o banco `colmeia` (usuário `root`, sem senha) e rode o backend com:
+
+```
+set ConnectionStrings__Default=Server=localhost;Port=4000;Database=colmeia;User=root;
+dotnet run --project backend\ColmeiaApi
+```
+
 ## 2. Backend (Render)
 
 1. Em https://render.com, crie um **Web Service** a partir do repositório do GitHub.

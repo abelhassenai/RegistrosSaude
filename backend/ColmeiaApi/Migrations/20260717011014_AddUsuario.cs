@@ -18,7 +18,7 @@ namespace ColmeiaApi.Migrations
                 name: "Localizacao",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     cidade = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     latitude = table.Column<decimal>(type: "decimal(10,7)", precision: 10, scale: 7, nullable: false),
@@ -35,7 +35,7 @@ namespace ColmeiaApi.Migrations
                 name: "Usuario",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     sobrenome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
@@ -65,8 +65,8 @@ namespace ColmeiaApi.Migrations
                 name: "Colmeia",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    idLocalizacao = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
+                    idLocalizacao = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -86,9 +86,9 @@ namespace ColmeiaApi.Migrations
                 name: "Registro",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    idUsuario = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    idColmeia = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
+                    idUsuario = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
+                    idColmeia = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     dataHoraObservacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     criacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     atualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -116,8 +116,8 @@ namespace ColmeiaApi.Migrations
                 name: "Sensor",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    idColmeia = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
+                    idColmeia = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     tipo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -137,8 +137,8 @@ namespace ColmeiaApi.Migrations
                 name: "Saude",
                 columns: table => new
                 {
-                    idRegistro = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    idColmeia = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    idRegistro = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
+                    idColmeia = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     presencaRainha = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     presencaPredador = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     tipoPredador = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
@@ -173,8 +173,8 @@ namespace ColmeiaApi.Migrations
                 name: "Leitura",
                 columns: table => new
                 {
-                    idRegistro = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    idSensor = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    idRegistro = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
+                    idSensor = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_bin"),
                     temperaturaInterna = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     temperaturaExterna = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),
                     umidadeInterna = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: true),

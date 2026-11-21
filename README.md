@@ -2,14 +2,19 @@
 
 Aplicação web para registrar e acompanhar colmeias de abelhas: cadastro de colmeias, registros de saúde, localização e sensores, painel de dados com gráficos, área de administração com aprovação de usuários e solicitações de alteração, além de jogos educativos.
 
+Projeto de extensão desenvolvido no SENAI Gaspar Ricardo Júnior (Sorocaba - SP).
+
+**Em produção:** https://registros-saude.vercel.app (API em https://registrossaude.onrender.com)
+
 ## Tecnologias
 
 | Camada | Tecnologia |
 |---|---|
 | Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS 4, Recharts |
 | Backend | ASP.NET Core (.NET 9), Entity Framework Core 9 (Pomelo MySQL), autenticação JWT, BCrypt, Swagger |
-| Banco de dados | MariaDB 11 (local) e TiDB Cloud (produção) |
-| Proxy reverso | Nginx |
+| Banco de dados | MariaDB 11 (local) e TiDB Cloud Starter (produção) |
+| Proxy reverso | Nginx (somente no ambiente local) |
+| Hospedagem | Vercel (frontend), Render (backend em Docker), TiDB Cloud (banco), UptimeRobot (monitoramento) |
 | Testes | xUnit (backend), Vitest, Testing Library e jest-axe (frontend) |
 
 ## Estrutura
@@ -19,9 +24,9 @@ backend/        API .NET (ColmeiaApi) e testes (ColmeiaApi.Tests)
 frontend/       Aplicação Next.js
 banco/          Script inicial do banco (init.sql)
 nginx/          Configuração do proxy reverso
-documentacao/   Diagramas (arquitetura, MER) e rascunhos
+documentacao/   Diagramas (arquitetura, MER), guias de publicação e rascunhos
+scripts/        Scripts de apoio (cadastro do primeiro admin)
 docker-compose.yml
-DEPLOY.md       Guia de publicação em produção
 ```
 
 ## Como rodar
@@ -84,10 +89,15 @@ Os valores presentes em `appsettings*.json` e `docker-compose.yml` servem apenas
 
 ## Publicação
 
-O passo a passo de produção (Vercel, Render e TiDB Cloud, sem custo) está em [DEPLOY.md](DEPLOY.md).
+O sistema é publicado sem custo em Vercel (frontend), Render (backend) e TiDB Cloud (banco). As contas desses serviços usam a conta Google do projeto; para ter acesso, contate os professores responsáveis pelo projeto de extensão.
+
+- [Arquitetura de publicação e manutenção](documentacao/ArquiteturaPublicacaoManutencao.md): como a publicação funciona e como manter o sistema.
+- [Tutorial de primeiro deploy](documentacao/TutorialPrimeiroDeploy.md): publicar do zero.
 
 ## Branches
 
-- `main`: versão estável.
+- `main`: versão em produção. Cada merge na `main` publica automaticamente no Vercel e no Render.
 - `develop`: integração do desenvolvimento.
-- `feature/*`: novas funcionalidades, criadas a partir de `develop`.
+- `feature/*`, `fix/*`, `docs/*`: alterações, criadas a partir de `develop`.
+
+Fluxo: crie a branch a partir de `develop`, abra PR para `develop` e, para publicar, abra PR de `develop` para `main`. Detalhes em [Arquitetura de publicação e manutenção](documentacao/ArquiteturaPublicacaoManutencao.md#5-manutenção).

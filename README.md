@@ -19,9 +19,9 @@ backend/        API .NET (ColmeiaApi) e testes (ColmeiaApi.Tests)
 frontend/       Aplicação Next.js
 banco/          Script inicial do banco (init.sql)
 nginx/          Configuração do proxy reverso
-documentacao/   Diagramas (arquitetura, MER) e rascunhos
+documentacao/   Diagramas (arquitetura, MER), guias de publicação e rascunhos
+scripts/        Scripts de apoio (cadastro do primeiro admin)
 docker-compose.yml
-DEPLOY.md       Guia de publicação em produção
 ```
 
 ## Como rodar
@@ -84,7 +84,10 @@ Os valores presentes em `appsettings*.json` e `docker-compose.yml` servem apenas
 
 ## Publicação
 
-O passo a passo de produção (Vercel, Render e TiDB Cloud, sem custo) está em [DEPLOY.md](DEPLOY.md).
+O sistema é publicado sem custo em Vercel (frontend), Render (backend) e TiDB Cloud (banco). As contas desses serviços usam a conta Google do projeto; para ter acesso, contate os professores responsáveis pelo projeto de extensão.
+
+- [Arquitetura de publicação e manutenção](documentacao/ArquiteturaPublicacaoManutencao.md): como a publicação funciona e como manter o sistema.
+- [Tutorial de primeiro deploy](documentacao/TutorialPrimeiroDeploy.md): publicar do zero.
 
 ## Branches
 

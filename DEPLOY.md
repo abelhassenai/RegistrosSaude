@@ -51,7 +51,7 @@ dotnet run --project backend\ColmeiaApi
 ## 2. Backend (Render)
 
 1. Em https://render.com, crie um **Web Service** a partir do repositório do GitHub.
-2. Runtime: **Docker**. Root Directory: `backend`. Plano: **Free**.
+2. Runtime: **Docker**. Branch: **main**. Root Directory: `backend`. Plano: **Free**.
 3. Variáveis de ambiente:
 
 | Nome | Valor |
@@ -68,8 +68,21 @@ dotnet run --project backend\ColmeiaApi
 
 1. Em https://vercel.com, **Add New Project** e importe o repositório.
 2. **Root Directory:** `frontend`. Framework: Next.js (detectado).
-3. Variável de ambiente: `API_INTERNAL_URL` = URL do Render (sem barra no final).
-4. Deploy. A cada push na branch de produção, o Vercel publica de novo.
+3. Variável de ambiente: `API_INTERNAL_URL` = URL do Render (sem barra no final). Ela é lida durante o build: se a URL do Render mudar, atualize a variável e faça um novo deploy no Vercel.
+4. Deploy. A cada push na `main`, o Vercel publica de novo.
+
+## 3.1 Primeiro administrador
+
+O banco de produção começa vazio e o sistema não cria nenhum administrador. Todo cadastro novo vira "Pesquisador" não aprovado, e usuários não aprovados não conseguem fazer login. Por isso o primeiro admin precisa ser criado direto no banco:
+
+1. Cadastre-se pelo site publicado no Vercel.
+2. No painel do TiDB Cloud, abra o **SQL Editor** e execute (troque o e-mail):
+
+```sql
+UPDATE colmeia.Usuario SET permissao = 'Admin', aprovado = 1 WHERE email = 'seu@email.com';
+```
+
+3. Faça login. A partir daí, aprove os outros usuários pela área de administração (`/admin`).
 
 ## 4. Manter o backend acordado
 
@@ -78,7 +91,7 @@ crie um monitor HTTP no https://uptimerobot.com para `https://xxxx.onrender.com/
 
 ## 5. Dia a dia
 
-- Editar o projeto: alterar o código e dar push no GitHub. Vercel e Render publicam sozinhos.
+- Editar o projeto: trabalhe numa branch, abra PR para a `develop` e, quando estiver pronto para publicar, abra PR da `develop` para a `main`. Vercel e Render publicam sozinhos a cada merge na `main`.
 - Ver erros do backend: painel do Render, aba *Logs*.
 - Ver dados: painel do TiDB Cloud (*SQL Editor*) ou qualquer cliente MySQL.
 - Rodar localmente: `docker compose up --build` na raiz do repositório (sobe MariaDB, API, frontend e Nginx em http://localhost).

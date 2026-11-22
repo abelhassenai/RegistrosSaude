@@ -189,7 +189,7 @@ export default function ColmeiasPage() {
       <Toast toasts={toasts} onRemove={removeToast} />
       <ConfirmDialog state={confirmState} onClose={closeConfirm} />
       <div className="sm:contents">
-        <TopBar user={user} active="colmeias" onLogout={handleLogout} />
+        <TopBar onLogout={handleLogout} />
       </div>
       <div className="max-w-5xl mx-auto mt-4 sm:mt-0 sm:pt-24">
         {/* Título */}

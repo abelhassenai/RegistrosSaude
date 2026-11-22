@@ -221,7 +221,7 @@ export default function SolicitacoesPage() {
     <main className="min-h-screen px-4 py-8" aria-label="Solicitações de alteração de registros">
       <Toast toasts={toasts} onRemove={removeToast} />
       <div className="sm:contents">
-        <TopBar user={user} active="solicitacoes" onLogout={handleLogout} />
+        <TopBar onLogout={handleLogout} />
       </div>
       <div className="max-w-5xl mx-auto mt-4 sm:mt-0 sm:pt-24">
         {/* Título */}

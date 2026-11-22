@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import TopBar from "@/app/components/TopBar";
 
 export default function ReflorestamentoPage() {
   return (
     <main className="min-h-screen px-4 py-8 flex flex-col items-center justify-center" aria-label="Jogo Reflorestamento">
+      {/* Menu único — muda apenas conforme o login */}
+      <div className="w-full max-w-xl mb-4 sm:mb-0">
+        <TopBar />
+      </div>
+
       <div className="w-full max-w-xl bg-yellow-950 rounded-2xl shadow-xl px-6 py-10 flex flex-col items-center text-center gap-4">
         <span className="text-6xl" aria-hidden="true">🌳</span>
         <h1 className="text-2xl font-black text-yellow-300">Reflorestamento</h1>

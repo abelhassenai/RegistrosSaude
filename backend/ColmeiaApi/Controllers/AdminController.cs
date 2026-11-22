@@ -230,16 +230,7 @@ public class AdminController(ColmeiaContext db) : ControllerBase
                 registro.Saude.Observacoes = dto.Observacoes;
             }
 
-            if (registro.Leitura is not null)
-            {
-                registro.Leitura.TemperaturaInterna = dto.TemperaturaInterna;
-                registro.Leitura.TemperaturaExterna = dto.TemperaturaExterna;
-                registro.Leitura.UmidadeInterna = dto.UmidadeInterna;
-                registro.Leitura.UmidadeExterna = dto.UmidadeExterna;
-                registro.Leitura.PressaoAtmosferica = dto.PressaoAtmosferica;
-                registro.Leitura.VelocidadeVento = dto.VelocidadeVento;
-                registro.Leitura.Peso = dto.Peso;
-            }
+            await db.AplicarLeituraAsync(registro, colmeia.Id, dto);
         }
 
         sol.Status = StatusSolicitacao.Aprovada;

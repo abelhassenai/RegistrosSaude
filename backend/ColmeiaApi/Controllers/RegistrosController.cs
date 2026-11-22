@@ -64,25 +64,7 @@ public class RegistrosController(ColmeiaContext db) : ControllerBase
             Observacoes = dto.Observacoes
         });
 
-        if (TemDadosLeitura(dto))
-        {
-            var sensor = await db.Sensores.FirstOrDefaultAsync(s => s.IdColmeia == colmeia.Id);
-            if (sensor is not null)
-            {
-                db.Leituras.Add(new Leitura
-                {
-                    IdRegistro = registro.Id,
-                    IdSensor = sensor.Id,
-                    TemperaturaInterna = dto.TemperaturaInterna,
-                    TemperaturaExterna = dto.TemperaturaExterna,
-                    UmidadeInterna = dto.UmidadeInterna,
-                    UmidadeExterna = dto.UmidadeExterna,
-                    PressaoAtmosferica = dto.PressaoAtmosferica,
-                    VelocidadeVento = dto.VelocidadeVento,
-                    Peso = dto.Peso
-                });
-            }
-        }
+        await db.AplicarLeituraAsync(registro, colmeia.Id, dto);
 
         await db.SaveChangesAsync();
         return Ok(new { id = registro.Id });
@@ -200,16 +182,7 @@ public class RegistrosController(ColmeiaContext db) : ControllerBase
                 registro.Saude.Observacoes = dto.Observacoes;
             }
 
-            if (registro.Leitura is not null)
-            {
-                registro.Leitura.TemperaturaInterna = dto.TemperaturaInterna;
-                registro.Leitura.TemperaturaExterna = dto.TemperaturaExterna;
-                registro.Leitura.UmidadeInterna = dto.UmidadeInterna;
-                registro.Leitura.UmidadeExterna = dto.UmidadeExterna;
-                registro.Leitura.PressaoAtmosferica = dto.PressaoAtmosferica;
-                registro.Leitura.VelocidadeVento = dto.VelocidadeVento;
-                registro.Leitura.Peso = dto.Peso;
-            }
+            await db.AplicarLeituraAsync(registro, colmeia.Id, dto);
 
             await db.SaveChangesAsync();
             return Ok(new { id = registro.Id });
@@ -238,13 +211,4 @@ public class RegistrosController(ColmeiaContext db) : ControllerBase
         await db.SaveChangesAsync();
         return Ok(new { message = "Solicitação de edição enviada para aprovação do administrador." });
     }
-
-    private static bool TemDadosLeitura(RegistroDto dto) =>
-        dto.TemperaturaInterna.HasValue ||
-        dto.TemperaturaExterna.HasValue ||
-        dto.UmidadeInterna.HasValue ||
-        dto.UmidadeExterna.HasValue ||
-        dto.PressaoAtmosferica.HasValue ||
-        dto.VelocidadeVento.HasValue ||
-        dto.Peso.HasValue;
 }

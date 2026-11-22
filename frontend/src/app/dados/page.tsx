@@ -3,10 +3,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { getAuthUser, clearAuthUser, type AuthUser } from "@/app/hooks/useAuth";
+import { getAuthUser, type AuthUser } from "@/app/hooks/useAuth";
 import TopBar from "@/app/components/TopBar";
 import BeeIcon from "@/app/components/BeeIcon";
-import { LogIn, House, BarChart2 } from "lucide-react";
 import Toast, { useToast } from "@/app/components/Toast";
 import { ConfirmDialog, useConfirm } from "@/app/components/ConfirmDialog";
 
@@ -228,59 +227,10 @@ export default function DadosPage() {
     <main className={`min-h-screen px-4 py-8 ${!authUser ? "bg-amber-50" : ""}`}>
       <Toast toasts={toasts} onRemove={removeToast} />
       <ConfirmDialog state={confirmState} onClose={closeConfirm} />
-      {/* TopBar — logado */}
-      {authUser && (
-        <div className="sm:contents">
-          <TopBar
-            user={authUser}
-            active="dados"
-            onLogout={() => { clearAuthUser(); setAuthUser(null); }}
-          />
-        </div>
-      )}
-
-      {/* Menu público — visitante não logado */}
-      {!authUser && (
-        <>
-          {/* Desktop: pill flutuante */}
-          <div
-            className="hidden sm:flex fixed top-6 right-16 z-50 items-center"
-            role="navigation"
-            aria-label="Navegação pública"
-          >
-            <div className="flex items-center bg-yellow-950 border-2 border-yellow-800 rounded-full px-2.5 py-2 gap-1.5 shadow-md">
-              <a href="/" aria-label="Início" className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-                <House size={17} strokeWidth={2} />
-              </a>
-              <a href="/dados" aria-label="Dados" className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-yellow-950 shadow-inner scale-110 transition-all duration-200">
-                <BarChart2 size={17} strokeWidth={2} />
-              </a>
-              <a href="/login?redirect=/dados" aria-label="Entrar" className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-                <LogIn size={17} strokeWidth={2} />
-              </a>
-            </div>
-          </div>
-
-          {/* Mobile: barra no topo */}
-          <div className="sm:hidden w-full bg-yellow-950 rounded-2xl shadow-xl px-4 py-3 flex items-center justify-between mb-4" role="navigation" aria-label="Navegação pública">
-            <div className="flex items-center gap-1">
-              <a href="/" aria-label="Início" className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-                <House size={17} strokeWidth={2} />
-              </a>
-              <a href="/dados" aria-label="Dados" className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-yellow-950 shadow-inner transition-all duration-200">
-                <BarChart2 size={17} strokeWidth={2} />
-              </a>
-            </div>
-            <a
-              href="/login?redirect=/dados"
-              className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200"
-              aria-label="Entrar"
-            >
-              <LogIn size={17} strokeWidth={2} />
-            </a>
-          </div>
-        </>
-      )}
+      {/* Menu único — muda apenas conforme o login */}
+      <div className="sm:contents">
+        <TopBar onLogout={() => setAuthUser(null)} />
+      </div>
       <div className={`max-w-7xl mx-auto mt-4 sm:mt-0 ${authUser ? "sm:pt-24" : "sm:pt-24"}`}>
         {/* Título da página */}
         {authUser ? (

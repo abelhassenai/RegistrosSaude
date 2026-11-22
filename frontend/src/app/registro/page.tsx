@@ -286,7 +286,7 @@ export default function Home() {
     >
       {/* TopBar */}
       <div className="sm:contents">
-        <TopBar user={user} active="registro" onLogout={handleLogout} />
+        <TopBar onLogout={handleLogout} />
       </div>
 
       <div className="max-w-5xl mx-auto flex flex-col gap-4 sm:gap-6 mt-4 sm:mt-0 sm:pt-24">

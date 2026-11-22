@@ -1,79 +1,14 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import BeeIcon from "@/app/components/BeeIcon";
+import TopBar from "@/app/components/TopBar";
 import {
-  BarChart2,
-  House,
-  LogIn,
-  Info,
   MapPin,
   Flower2,
   ShieldAlert,
   Thermometer,
-  Gamepad2,
 } from "lucide-react";
-
-// ── Menu público (mesmo padrão da Home) ─────────────────────────────────────────
-
-function PublicNav() {
-  return (
-    <>
-      {/* Desktop: pill flutuante igual às outras páginas */}
-      <div className="hidden sm:flex fixed top-6 right-16 z-50 items-center" role="navigation">
-        <div className="flex items-center bg-yellow-950 border-2 border-yellow-800 rounded-full px-2.5 py-2 gap-1.5 shadow-md">
-          <Link href="/" aria-label="Início"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <House size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/abelhas" aria-label="Abelhas" aria-current="page"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-yellow-950 scale-110 shadow-inner transition-all duration-200">
-            <Info size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/dados" aria-label="Dados"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <BarChart2 size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/jogo" aria-label="Jogo"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <Gamepad2 size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/login" aria-label="Entrar"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <LogIn size={17} strokeWidth={2} />
-          </Link>
-        </div>
-      </div>
-
-      {/* Mobile: barra no topo igual ao TopBar */}
-      <div className="sm:hidden w-full bg-yellow-950 rounded-2xl shadow-xl px-4 py-3 flex items-center justify-between" role="navigation">
-        <div className="flex items-center gap-1">
-          <Link href="/" aria-label="Início"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-            <House size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/abelhas" aria-label="Abelhas" aria-current="page"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-yellow-950 transition-all duration-200">
-            <Info size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/dados" aria-label="Dados"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-            <BarChart2 size={17} strokeWidth={2} />
-          </Link>
-          <Link href="/jogo" aria-label="Jogo"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-            <Gamepad2 size={17} strokeWidth={2} />
-          </Link>
-        </div>
-        <Link href="/login" aria-label="Entrar"
-          className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-          <LogIn size={17} strokeWidth={2} />
-        </Link>
-      </div>
-    </>
-  );
-}
 
 // ── Cartão de característica reutilizável ────────────────────────────────────────
 
@@ -195,7 +130,7 @@ function FlyingBees() {
 export default function AbelhasPage() {
   return (
     <main className="min-h-screen px-4 py-8" aria-label="Página informativa sobre as abelhas">
-      <PublicNav />
+      <TopBar />
 
       <div className="max-w-4xl mx-auto mt-4 sm:mt-0 sm:pt-24 flex flex-col gap-6">
 

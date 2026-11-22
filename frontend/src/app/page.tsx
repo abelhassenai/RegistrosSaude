@@ -2,74 +2,15 @@
 
 import React from "react";
 import BeeIcon from "@/app/components/BeeIcon";
-import { BarChart2, BookOpen, Mail, ExternalLink, House, LogIn, Hexagon, Info, ArrowRight, Gamepad2 } from "lucide-react";
-
-// ── Menu público ──────────────────────────────────────────────────────────────
-
-function PublicNav() {
-  return (
-    <>
-      {/* Desktop: pill flutuante igual às outras páginas */}
-      <div className="hidden sm:flex fixed top-6 right-16 z-50 items-center" role="navigation">
-        <div className="flex items-center bg-yellow-950 border-2 border-yellow-800 rounded-full px-2.5 py-2 gap-1.5 shadow-md">
-          <a href="/" aria-label="Início"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-yellow-950 scale-110 shadow-inner transition-all duration-200">
-            <House size={17} strokeWidth={2} />
-          </a>
-          <a href="/abelhas" aria-label="Abelhas"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <Info size={17} strokeWidth={2} />
-          </a>
-          <a href="/dados" aria-label="Dados"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <BarChart2 size={17} strokeWidth={2} />
-          </a>
-          <a href="/jogo" aria-label="Jogo"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <Gamepad2 size={17} strokeWidth={2} />
-          </a>
-          <a href="/login" aria-label="Entrar"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-500 hover:bg-yellow-800 hover:text-yellow-300 transition-all duration-200">
-            <LogIn size={17} strokeWidth={2} />
-          </a>
-        </div>
-      </div>
-
-      {/* Mobile: barra no topo igual ao TopBar */}
-      <div className="sm:hidden w-full bg-yellow-950 rounded-2xl shadow-xl px-4 py-3 flex items-center justify-between" role="navigation">
-        <div className="flex items-center gap-1">
-          <a href="/" aria-label="Início"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-yellow-950 transition-all duration-200">
-            <House size={17} strokeWidth={2} />
-          </a>
-          <a href="/abelhas" aria-label="Abelhas"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-            <Info size={17} strokeWidth={2} />
-          </a>
-          <a href="/dados" aria-label="Dados"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-            <BarChart2 size={17} strokeWidth={2} />
-          </a>
-          <a href="/jogo" aria-label="Jogo"
-            className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-            <Gamepad2 size={17} strokeWidth={2} />
-          </a>
-        </div>
-        <a href="/login" aria-label="Entrar"
-          className="flex items-center justify-center w-9 h-9 rounded-full text-yellow-400 hover:bg-yellow-900 transition-all duration-200">
-          <LogIn size={17} strokeWidth={2} />
-        </a>
-      </div>
-    </>
-  );
-}
+import TopBar from "@/app/components/TopBar";
+import { BarChart2, BookOpen, Mail, ExternalLink, Hexagon, ArrowRight, Gamepad2 } from "lucide-react";
 
 // ── Página Home ───────────────────────────────────────────────────────────────
 
 export default function HomePage() {
   return (
     <main className="min-h-screen px-4 py-8" aria-label="Página inicial">
-      <PublicNav />
+      <TopBar />
 
       <div className="max-w-4xl mx-auto mt-4 sm:mt-0 sm:pt-24 flex flex-col gap-6">
 

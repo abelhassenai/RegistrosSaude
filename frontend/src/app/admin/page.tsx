@@ -179,7 +179,7 @@ export default function AdminUsuariosPage() {
       <ConfirmDialog state={confirmState} onClose={closeConfirm} />
       {/* TopBar */}
       <div className="sm:contents">
-        <TopBar user={user} active="admin" onLogout={handleLogout} />
+        <TopBar onLogout={handleLogout} />
       </div>
       <div className="max-w-5xl mx-auto mt-4 sm:mt-0 sm:pt-24">
         {/* Título */}

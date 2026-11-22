@@ -7,6 +7,7 @@ import Button from "@/app/components/Button";
 import BeeIcon from "@/app/components/BeeIcon";
 import IconPickerField, { DEFAULT_ICON } from "@/app/components/IconPickerField";
 import { useAuth, saveAuthUser, clearAuthUser } from "@/app/hooks/useAuth";
+import TopBar from "@/app/components/TopBar";
 import { ArrowLeft } from "lucide-react";
 
 const DEFAULT_EMOJI = DEFAULT_ICON;
@@ -176,17 +177,22 @@ export default function PerfilPage() {
       className="min-h-screen flex items-center justify-center px-4 py-10"
       aria-label="Página de edição de perfil"
     >
-      {/* Botão voltar — fixo no canto superior esquerdo, mesmo nível do menu */}
-      <button
-        type="button"
-        onClick={() => router.back()}
-        className="fixed top-8 right-4 sm:right-16 z-50 flex items-center gap-2 bg-yellow-950 text-yellow-300 hover:bg-yellow-900 transition-colors px-4 py-2 rounded-full shadow-md text-sm font-semibold"
-      >
-        <ArrowLeft size={15} strokeWidth={2} />
-        Voltar
-      </button>
+      <div className="max-w-2xl w-full sm:pt-24">
+        {/* Menu único — muda apenas conforme o login */}
+        <div className="mb-4 sm:mb-0">
+          <TopBar onLogout={() => router.replace("/login")} />
+        </div>
 
-      <div className="max-w-2xl w-full mt-16 sm:mt-0">
+        {/* Botão voltar — no celular fica abaixo do menu; no desktop, fixo no canto superior esquerdo */}
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="mb-4 sm:mb-0 sm:fixed sm:top-8 sm:left-16 z-50 flex items-center gap-2 bg-yellow-950 text-yellow-300 hover:bg-yellow-900 transition-colors px-4 py-2 rounded-full shadow-md text-sm font-semibold"
+        >
+          <ArrowLeft size={15} strokeWidth={2} />
+          Voltar
+        </button>
+
         <div className="w-full bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}
           <div className="bg-yellow-950 px-6 py-7 flex items-start gap-4">
